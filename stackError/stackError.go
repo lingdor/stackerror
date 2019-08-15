@@ -6,20 +6,29 @@ import (
 	"runtime/debug"
 )
 
-type stackError struct{
+type StackError struct{
 	stack []byte
 	msg string
 }
 
-func New(msg string) *stackError{
-	return &stackError{
+func New(msg string) *StackError{
+	return &StackError{
 		stack:debug.Stack(),
 		msg:msg,
 	}
-
 }
 
-func (this *stackError) PrintErr(){
+func (this *StackError) PrintErr(){
 	fmt.Fprintln( os.Stderr,"error:",this.msg)
 	fmt.Fprintln( os.Stderr, string(this.stack))
+}
+func (this *StackError) Error() string{
+	return this.msg
+}
+
+func IsStackError(err error) bool{
+	switch err.(type) {
+	case *StackError: return true
+	}
+	return false
 }
