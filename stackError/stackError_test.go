@@ -30,5 +30,3 @@ func TestIsStackError(t *testing.T){
 		return
 	}
 }
-
-
