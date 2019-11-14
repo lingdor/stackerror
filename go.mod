@@ -1,1 +1,3 @@
-module github.com/bobby96333/commonLib
+module github.com/lingdor/stackError
+
+go 1.13
