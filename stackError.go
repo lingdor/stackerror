@@ -5,8 +5,9 @@ import (
 	"reflect"
 	"runtime"
 )
-const DEFAULT_STACK_MAX_DEEP=16
-var StackMaxDeep=DEFAULT_STACK_MAX_DEEP
+
+var StackMaxDeep=16
+var MaxStackSize = 1024
 
 type stackError struct{
 	stack []runtime.Frame
@@ -17,7 +18,6 @@ type stackError struct{
 type StackError interface{
 	error
 	GetMsg() string
-	GetStack() string
 }
 
 func New(msg string) error{
@@ -28,14 +28,14 @@ func ChildNew(msg string, parent error) error{
 	val:= &stackError{
 		msg:msg,
 	}
-	val.stack= getOutCallers(StackMaxDeep)
+	val.stack = getOutCallers(StackMaxDeep)
 	val.parent=parent
 	return val
 }
 
 func (this *stackError) Error() string{
 	var err error = this
-	buffer:=bytes.NewBuffer([]byte{})
+	buffer:=bytes.Buffer{}
 	for err != nil {
 		tt:=reflect.TypeOf(err)
 		buffer.WriteString(tt.String())
@@ -51,6 +51,13 @@ func (this *stackError) Error() string{
 		break
 	}
 	return buffer.String()
+}
+
+func (this *stackError) String() string{
+	return this.Error()
+}
+func (this *stackError) GetMsg() string{
+	return this.msg
 }
 
 func Throw(msg string){

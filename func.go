@@ -10,14 +10,23 @@ import (
 )
 
 /**
-print stack and exit
- */
+Check error and print after exit
+*/
 func CheckExitError (err error) {
 	if err==nil {
 		return
 	}
 	fmt.Fprintln(os.Stderr,"error message:",err.Error())
 	os.Exit(1)
+}
+/**
+check error and panic
+*/
+func CheckPanic (err error) {
+	if err==nil {
+		return
+	}
+	panic(err)
 }
 func Panic(errMsg string){
 	newErr:= New(errMsg)
@@ -76,11 +85,11 @@ func formatStackFrame(frames []runtime.Frame) []byte{
 		}
 		buffer.WriteString("  at ")
 		buffer.WriteString(frame.Function)
-		buffer.WriteString(" (")
+		buffer.WriteString("( ")
 		buffer.WriteString(frame.File)
 		buffer.WriteString(":")
 		buffer.WriteString(strconv.Itoa(frame.Line))
-		buffer.WriteString(")")
+		buffer.WriteString(" )")
 	}
 	return buffer.Bytes()
 
