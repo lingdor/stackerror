@@ -6,46 +6,46 @@ import (
 	"runtime"
 )
 
-var StackMaxDeep=16
+var StackMaxDeep = 16
 var MaxStackSize = 1024
 
-type stackError struct{
-	stack []runtime.Frame
-	msg string
+type stackError struct {
+	stack  []runtime.Frame
+	msg    string
 	parent error
 }
 
-type StackError interface{
+type StackError interface {
 	error
 	GetMsg() string
 }
 
-func New(msg string) error{
-	return ChildNew(msg,nil)
+func New(msg string) StackError {
+	return ChildNew(msg, nil)
 }
 
-func ChildNew(msg string, parent error) error{
-	val:= &stackError{
-		msg:msg,
+func ChildNew(msg string, parent error) StackError {
+	val := &stackError{
+		msg: msg,
 	}
 	val.stack = getOutCallers(StackMaxDeep)
-	val.parent=parent
+	val.parent = parent
 	return val
 }
 
-func (this *stackError) Error() string{
+func (this *stackError) Error() string {
 	var err error = this
-	buffer:=bytes.Buffer{}
+	buffer := bytes.Buffer{}
 	for err != nil {
-		tt:=reflect.TypeOf(err)
+		tt := reflect.TypeOf(err)
 		buffer.WriteString(tt.String())
 		buffer.WriteString(" : ")
 		buffer.WriteString(this.msg)
-		if tt==reflect.TypeOf(this) {
+		if tt == reflect.TypeOf(this) {
 			buffer.WriteString("\n")
-			stackErr:=err.(*stackError)
+			stackErr := err.(*stackError)
 			buffer.Write(formatStackFrame(stackErr.stack))
-			err=stackErr.parent
+			err = stackErr.parent
 			continue
 		}
 		break
@@ -53,14 +53,11 @@ func (this *stackError) Error() string{
 	return buffer.String()
 }
 
-func (this *stackError) String() string{
+func (this *stackError) String() string {
 	return this.Error()
 }
-func (this *stackError) GetMsg() string{
-	return this.msg
-}
 
-func Throw(msg string){
-	err:=New(msg)
-	CheckExitError(err)
+//get error message
+func (this *stackError) GetMsg() string {
+	return this.msg
 }

@@ -4,17 +4,17 @@ import (
 	"runtime"
 )
 
-var pkgName string ="github.com/lingdor/stackError"
-func init(){
+var pkgName string = "github.com/lingdor/stackError"
+
+func init() {
 	pc := make([]uintptr, 1)
-	runtime.Callers(1,pc)
-	frm :=runtime.CallersFrames(pc)
-	frmval,ok:= frm.Next()
+	runtime.Callers(1, pc)
+	frm := runtime.CallersFrames(pc)
+	frmval, ok := frm.Next()
 	if ok {
-		newName:=FuncNameToPkgName(frmval.Function)
-		if newName!=""{
-			pkgName=newName
+		newName := FuncNameToPkgName(frmval.Function)
+		if newName != "" {
+			pkgName = newName
 		}
 	}
 }
-
