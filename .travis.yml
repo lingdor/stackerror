@@ -9,7 +9,7 @@ go: [1.12.x, 1.13.x]
 os: [linux, osx, windows]
 
 install:
-
+  - CODECOV_TOKEN="c3f0735d-f0b4-4a7f-88c0-b34e6c7f58aa"
 script:
   - go test -race -v  -coverprofile=coverage.txt -covermode=atomic
 
