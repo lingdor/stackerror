@@ -1,3 +1,4 @@
+//stackError A have stack information with error library
 package stackError
 
 import (
@@ -6,7 +7,10 @@ import (
 	"runtime"
 )
 
+//StackMaxDeep Max deep with stack infromation
 var StackMaxDeep = 16
+
+//MaxStackSize Max byte size of formating stack information
 var MaxStackSize = 1024
 
 type stackError struct {
@@ -15,6 +19,7 @@ type stackError struct {
 	child error
 }
 
+//StackError stackError package information interface
 type StackError interface {
 	error
 	GetMsg() string
@@ -22,10 +27,12 @@ type StackError interface {
 	GetChild() error
 }
 
+//New Get a StackError object with msg
 func New(msg string) StackError {
 	return NewParent(msg, nil)
 }
 
+//NewParent Get a parent stackError object with msg and child
 func NewParent(msg string, child error) StackError {
 	val := &stackError{
 		msg: msg,
@@ -35,6 +42,7 @@ func NewParent(msg string, child error) StackError {
 	return val
 }
 
+//Error format stackError information with string
 func (this *stackError) Error() string {
 	var err error = this
 	buffer := bytes.Buffer{}
@@ -60,21 +68,22 @@ func (this *stackError) Error() string {
 	return buffer.String()
 }
 
+//String invoked Error() method
 func (this *stackError) String() string {
 	return this.Error()
 }
 
-//get error message
+//GetMsg get error message
 func (this *stackError) GetMsg() string {
 	return this.msg
 }
 
-//get error stacks
+//GetStacks get error stacks
 func (this *stackError) GetStacks() []runtime.Frame {
 	return this.stack
 }
 
-//Get error childInfo
+//GetChild Get error childInfo
 func (this *stackError) GetChild() error {
 	return this.child
 }

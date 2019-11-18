@@ -9,9 +9,7 @@ import (
 	"strings"
 )
 
-/**
-Check error and print after exit
-*/
+//CheckExitError Check error and print after exit
 func CheckExitError(err error) {
 	if err == nil {
 		return
@@ -20,9 +18,7 @@ func CheckExitError(err error) {
 	os.Exit(1)
 }
 
-/**
-check error and panic
-*/
+//CheckPanic check error and panic
 func CheckPanic(err error) {
 	if err == nil {
 		return
@@ -35,13 +31,13 @@ func CheckPanic(err error) {
 	}
 }
 
-//make a stackError panic()
+//Panic make a stackError panic()
 func Panic(errMsg string) {
 	newErr := New(errMsg)
 	panic(newErr)
 }
 
-//make a stacError panic() with error
+//PanicError make a stacError panic() with error
 func PanicError(err error) {
 	newErr := NewParent(err.Error(), err)
 	panic(newErr)

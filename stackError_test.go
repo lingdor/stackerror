@@ -5,10 +5,6 @@ import (
 	"testing"
 )
 
-type ii interface {
-	XX() string
-}
-
 func TestNew(t *testing.T) {
 
 	err := New("test error")
