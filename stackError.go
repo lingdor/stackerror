@@ -18,6 +18,8 @@ type stackError struct {
 type StackError interface {
 	error
 	GetMsg() string
+	GetStacks() []runtime.Frame
+	GetChild() error
 }
 
 func New(msg string) StackError {
@@ -36,17 +38,22 @@ func NewParent(msg string, child error) StackError {
 func (this *stackError) Error() string {
 	var err error = this
 	buffer := bytes.Buffer{}
-	for err != nil {
+	for i := 0; err != nil; i++ {
+		if i > 0 {
+			buffer.WriteString("\n")
+		}
 		tt := reflect.TypeOf(err)
 		buffer.WriteString(tt.String())
 		buffer.WriteString(" : ")
-		buffer.WriteString(this.msg)
-		if tt == reflect.TypeOf(this) {
+		childStackError, isStack := err.(StackError)
+		if isStack {
+			buffer.WriteString(childStackError.GetMsg())
 			buffer.WriteString("\n")
-			stackErr := err.(*stackError)
-			buffer.Write(formatStackFrame(stackErr.stack))
-			err = stackErr.child
+			buffer.Write(formatStackFrame(childStackError.GetStacks()))
+			err = childStackError.GetChild()
 			continue
+		} else {
+			buffer.WriteString(err.Error())
 		}
 		break
 	}
@@ -60,4 +67,14 @@ func (this *stackError) String() string {
 //get error message
 func (this *stackError) GetMsg() string {
 	return this.msg
+}
+
+//get error stacks
+func (this *stackError) GetStacks() []runtime.Frame {
+	return this.stack
+}
+
+//Get error childInfo
+func (this *stackError) GetChild() error {
+	return this.child
 }
