@@ -10,11 +10,11 @@ func init() {
 	pc := make([]uintptr, 1)
 	runtime.Callers(1, pc)
 	frm := runtime.CallersFrames(pc)
-	frmval, ok := frm.Next()
-	if ok {
-		newName := funcNameToPkgName(frmval.Function)
-		if newName != "" {
-			pkgName = newName
-		}
+	frmval, _ := frm.Next()
+	//if ok {
+	newName := funcNameToPkgName(frmval.Function)
+	if newName != "" {
+		pkgName = newName
 	}
+	//}
 }
