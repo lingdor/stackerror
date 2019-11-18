@@ -10,9 +10,9 @@ var StackMaxDeep = 16
 var MaxStackSize = 1024
 
 type stackError struct {
-	stack  []runtime.Frame
-	msg    string
-	parent error
+	stack []runtime.Frame
+	msg   string
+	child error
 }
 
 type StackError interface {
@@ -21,15 +21,15 @@ type StackError interface {
 }
 
 func New(msg string) StackError {
-	return ChildNew(msg, nil)
+	return NewParent(msg, nil)
 }
 
-func ChildNew(msg string, parent error) StackError {
+func NewParent(msg string, child error) StackError {
 	val := &stackError{
 		msg: msg,
 	}
 	val.stack = getOutCallers(StackMaxDeep)
-	val.parent = parent
+	val.child = child
 	return val
 }
 
@@ -45,7 +45,7 @@ func (this *stackError) Error() string {
 			buffer.WriteString("\n")
 			stackErr := err.(*stackError)
 			buffer.Write(formatStackFrame(stackErr.stack))
-			err = stackErr.parent
+			err = stackErr.child
 			continue
 		}
 		break

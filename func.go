@@ -39,7 +39,7 @@ func Panic(errMsg string) {
 	panic(newErr)
 }
 func PanicError(err error) {
-	newErr := ChildNew(err.Error(), err)
+	newErr := NewParent(err.Error(), err)
 	panic(newErr)
 }
 
