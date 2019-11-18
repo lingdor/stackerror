@@ -1,32 +1,20 @@
 package stackError
 
 import (
-	"fmt"
+	"errors"
 	"testing"
 )
 
-func TestCheckExitError(t *testing.T) {
+func TestCheckPanic(t *testing.T) {
 
-	err:= New("stackErr")
-	//err2 := errors.New("stackErr")
-	//err.PrintErr()
-	CheckExitError(err)
+	defer func() {
+		if err := recover(); err == nil {
+			t.Error()
+		}
+	}()
 
-}
-type tt struct{
-	Attr string
-}
-
-func TestDebugStack(t *testing.T){
-
-	fmt.Println(1)
-
-
-}
-func TestDebugCaller(t *testing.T){
-
-	fmt.Println(2)
-
-
-
+	err := errors.New("TestCheckPanic")
+	CheckPanic(err)
+	PanicError(err)
+	Panic("TestCheckPanic")
 }

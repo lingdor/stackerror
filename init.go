@@ -12,7 +12,7 @@ func init() {
 	frm := runtime.CallersFrames(pc)
 	frmval, ok := frm.Next()
 	if ok {
-		newName := FuncNameToPkgName(frmval.Function)
+		newName := funcNameToPkgName(frmval.Function)
 		if newName != "" {
 			pkgName = newName
 		}

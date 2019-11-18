@@ -34,16 +34,21 @@ func CheckPanic(err error) {
 		panic(New(err.Error()))
 	}
 }
+
+//make a stackError panic()
 func Panic(errMsg string) {
 	newErr := New(errMsg)
 	panic(newErr)
 }
+
+//make a stacError panic() with error
 func PanicError(err error) {
 	newErr := NewParent(err.Error(), err)
 	panic(newErr)
 }
 
-func FuncNameToPkgName(funcName string) string {
+//Get PkgName from *Func.Function
+func funcNameToPkgName(funcName string) string {
 
 	index := strings.LastIndex(funcName, "/")
 	if index == -1 {
@@ -57,6 +62,7 @@ func FuncNameToPkgName(funcName string) string {
 	return pkgName
 }
 
+//condition string start with
 func startWith(full string, partten string) bool {
 	lenPartten := len(partten)
 	if lenPartten > len(full) {
@@ -65,6 +71,7 @@ func startWith(full string, partten string) bool {
 	return full[0:lenPartten] == partten
 }
 
+//Get callers of current
 func getOutCallers(maxDeep int) []runtime.Frame {
 	pc := make([]uintptr, maxDeep)
 	result := make([]runtime.Frame, 0, maxDeep)
@@ -83,6 +90,7 @@ func getOutCallers(maxDeep int) []runtime.Frame {
 	return result
 }
 
+//stack Frame to []byte message
 func formatStackFrame(frames []runtime.Frame) []byte {
 	buffer := bytes.Buffer{}
 	for i, frame := range frames {
