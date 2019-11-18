@@ -11,4 +11,7 @@ os: [linux, osx, windows]
 install:
 
 script:
-  - go test -race -v
+  - go test -race -v  -coverprofile=coverage.txt -covermode=atomic
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
