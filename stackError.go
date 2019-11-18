@@ -1,4 +1,4 @@
-//stackError A have stack information with error library
+// Package stackError A have stack information with error library
 package stackError
 
 import (
@@ -7,10 +7,10 @@ import (
 	"runtime"
 )
 
-//StackMaxDeep Max deep with stack infromation
+// StackMaxDeep Max deep with stack infromation
 var StackMaxDeep = 16
 
-//MaxStackSize Max byte size of formating stack information
+// MaxStackSize Max byte size of formating stack information
 var MaxStackSize = 1024
 
 type stackError struct {
@@ -19,7 +19,7 @@ type stackError struct {
 	child error
 }
 
-//StackError stackError package information interface
+// StackError stackError package information interface
 type StackError interface {
 	error
 	GetMsg() string
@@ -27,12 +27,12 @@ type StackError interface {
 	GetChild() error
 }
 
-//New Get a StackError object with msg
+// New Get a StackError object with msg
 func New(msg string) StackError {
 	return NewParent(msg, nil)
 }
 
-//NewParent Get a parent stackError object with msg and child
+// NewParent Get a parent stackError object with msg and child
 func NewParent(msg string, child error) StackError {
 	val := &stackError{
 		msg: msg,
