@@ -55,8 +55,8 @@ func main(){
 
 Output: \
 *stackerror.stackError : err
-  at main.aa( /Users/bobby96333/go/testApp/src/main/aa.go:8 )
-  at main.main( /Users/bobby96333/go/testApp/src/main/aa.go:18 )
+  at main.aa( /Users/user/go/testApp/src/main/aa.go:8 )
+  at main.main( /Users/user/go/testApp/src/main/aa.go:18 )
   at runtime.main( /usr/local/Cellar/go/1.13.4/libexec/src/runtime/proc.go:203 )
 
 # Thanks
