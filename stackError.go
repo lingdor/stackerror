@@ -7,7 +7,7 @@ import (
 	"runtime"
 )
 
-// StackMaxDeep Max deep with stack infromation
+// StackMaxDeep Max deep with stack information
 var StackMaxDeep = 16
 
 // MaxStackSize Max byte size of formating stack information
