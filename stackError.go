@@ -1,4 +1,4 @@
-// package  stackerror A have stack information with error library
+// Package  stackerror A have stack information with error library
 package stackerror
 
 import (
@@ -43,8 +43,8 @@ func NewParent(msg string, child error) StackError {
 }
 
 //Error format stackError information with string
-func (this *stackError) Error() string {
-	var err error = this
+func (my *stackError) Error() string {
+	var err error = my
 	buffer := bytes.Buffer{}
 	for i := 0; err != nil; i++ {
 		if i > 0 {
@@ -69,21 +69,21 @@ func (this *stackError) Error() string {
 }
 
 //String invoked Error() method
-func (this *stackError) String() string {
-	return this.Error()
+func (my *stackError) String() string {
+	return my.Error()
 }
 
 //GetMsg get error message
-func (this *stackError) GetMsg() string {
-	return this.msg
+func (my *stackError) GetMsg() string {
+	return my.msg
 }
 
 //GetStacks get error stacks
-func (this *stackError) GetStacks() []runtime.Frame {
-	return this.stack
+func (my *stackError) GetStacks() []runtime.Frame {
+	return my.stack
 }
 
 //GetChild Get error childInfo
-func (this *stackError) GetChild() error {
-	return this.child
+func (my *stackError) GetChild() error {
+	return my.child
 }

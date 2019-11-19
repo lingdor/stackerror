@@ -1,7 +1,7 @@
 # Overview
 [![Build Status](https://travis-ci.org/lingdor/stackerror.svg?branch=master)](https://travis-ci.org/lingdor/stackerror)
 [![codecov](https://codecov.io/gh/lingdor/stackerror/branch/master/graph/badge.svg)](https://codecov.io/gh/lingdor/stackerror)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/lingdor/stackError)](https://goreportcard.com/report/github.com/lingdor/stackError)
 
 Go native error library is a great design, but in some scenarios, there are some flaws. In a complex business scenario, it is necessary to quickly locate the code exception location, but the native error only supports viewing the stack data when panic is used. When multiple returns or panic / recover are used, it is difficult to get the actual starting point of the exception. This makes code debugging a lot of difficulties!
 
