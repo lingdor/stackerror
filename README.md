@@ -39,20 +39,27 @@ Grace method checking error
 func aa() error {
     return stackError.New("err")
 }
+
 func main(){
-    err:=aa()
-    stackError.CheckPanic(err)
+	defer func(){
+		if err:=recover();err!=nil {
+			fmt.Println(err)
+		}
+	}()
+
+	err:=aa()
+	stackError.CheckPanic(err)
 }
 
 ```
 
+Output: \
+*stackError.stackError : err
+  at main.aa( /Users/bobby96333/go/testApp/src/main/aa.go:8 )
+  at main.main( /Users/bobby96333/go/testApp/src/main/aa.go:18 )
+  at runtime.main( /usr/local/Cellar/go/1.13.4/libexec/src/runtime/proc.go:203 )
 
-
-
-
-
-
-#Thanks
+# Thanks
 
 
 
