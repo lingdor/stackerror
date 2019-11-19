@@ -31,16 +31,25 @@ stackerror.Panic("your message")
 func aa() error {
     return stackerror.New("err")
 }
+
 func main(){
-    err:=aa()
-    stackerror.CheckPanic(err)
+	defer func(){
+		if err:=recover();err!=nil {
+			fmt.Println(err)
+		}
+	}()
+
+	err:=aa()
+	stackerror.CheckPanic(err)
 }
 
 ```
 
-
-
-
+输出: \
+*stackerror.stackError : err\
+  at main.aa( /Users/user/go/testApp/src/main/aa.go:8 )\
+  at main.main( /Users/user/go/testApp/src/main/aa.go:18 )\
+  at runtime.main( /usr/local/Cellar/go/1.13.4/libexec/src/runtime/proc.go:203 )\
 
 
 
