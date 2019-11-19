@@ -4,12 +4,12 @@ go原生error库是一个很棒的设计，但是在一些场景中，存在一�
 # 获取代码
 方式1
 ```shell script
-  go get github.com/lingdor/stackError
+  go get github.com/lingdor/stackerror
 ```
 方式2 \
 go.mod
 ```go
-  require github.com/lingdor/stackError v0.1.5
+  require github.com/lingdor/stackerror v0.1.5
 ```
 ```shell script
   go mod download
@@ -19,21 +19,21 @@ go.mod
 
 创建一个stackError
 ```go
-err:=stackError.New("your message")
+err:=stackerror.New("your message")
 return err
 ```
 抛出一个stackerror
 ```go
-stackError.Panic("your message")
+stackerror.Panic("your message")
 ```
 优雅处理error
 ```go
 func aa() error {
-    return stackError.New("err")
+    return stackerror.New("err")
 }
 func main(){
     err:=aa()
-    stackError.CheckPanic(err)
+    stackerror.CheckPanic(err)
 }
 
 ```

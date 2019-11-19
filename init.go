@@ -1,11 +1,11 @@
-// Package stackError A have stack information with error library
-package stackError
+// package  stackerror A have stack information with error library
+package stackerror
 
 import (
 	"runtime"
 )
 
-var pkgName string = "github.com/lingdor/stackError"
+var pkgName string = "github.com/lingdor/stackerror"
 
 func init() {
 	pc := make([]uintptr, 1)

@@ -1,5 +1,5 @@
-// Package stackError A have stack information with error library
-package stackError
+// package  stackerror A have stack information with error library
+package stackerror
 
 import (
 	"bytes"

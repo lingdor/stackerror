@@ -1,5 +1,5 @@
 language: go
-go_import_path: github.com/lingdor/stackError
+go_import_path: github.com/lingdor/stackerror
 git:
   depth: 1
 env:
